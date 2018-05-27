@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RemoTest</string>
+    <string name="test_message">test</string>
+
+
+    <!-- ボタン -->
+    <string name="get_user">getUset</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="string_array_name">
+        <item>get_user</item>
+        <item>get_application</item>
+    </string-array>
+</resources>

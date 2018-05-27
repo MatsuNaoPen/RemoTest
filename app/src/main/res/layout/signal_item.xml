@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/signal_item_model_text"
+        style="@style/SignalList"
+        android:background="@color/modelArea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="機器名"/>
+
+    <LinearLayout
+        android:id="@+id/signal_item_signal_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical" />
+
+</LinearLayout>
