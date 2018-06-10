@@ -12,11 +12,13 @@ import com.matusnao.remotest.connection.request.RequestGetAppliances
 import com.matusnao.remotest.connection.request.RequestGetDevices
 import com.matusnao.remotest.connection.request.RequestGetUsersMe
 import com.matusnao.remotest.connection.response.ResponseGetAppliances
-import com.matusnao.remotest.connection.response.ResponseGetDevices
 import com.matusnao.remotest.connection.response.ResponseGetUsersMe
+import com.matusnao.remotest.connection.service.GetDeviceService
+import com.matusnao.remotest.connection.service.GetDeviceServiceOld
 import com.matusnao.remotest.data.SignalListData
 import com.matusnao.remotest.data.Signals
 import com.matusnao.remotest.enums.EventEnum
+import com.matusnao.remotest.view.VCInterface.DeviceUpdateEvent
 import com.matusnao.remotest.view.fragment.SignalListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -71,26 +73,11 @@ class MainActivity : AppCompatActivity() {
                         })
                     }
                     EventEnum.GET_DEVICES -> {
-                        val request = retrofit.create(RequestGetDevices::class.java).request()
-                        request.enqueue(object : Callback<List<ResponseGetDevices>> {
-                            override fun onResponse(call: Call<List<ResponseGetDevices>>?, responseGet: Response<List<ResponseGetDevices>>?) {
-                                when (responseGet!!.code()) {
-                                    200 -> {
-                                        Log.d(TAG, "on Response:" + responseGet.toString())
-                                        val result: List<ResponseGetDevices> = responseGet.body()!!
-                                        Log.d(TAG, result.toString())
-                                        updateResultArea(result.toString())
-                                    }
-                                    else->
-                                        Log.d(TAG, "on Response:" + responseGet.errorBody()!!.string())
-                                }
-                            }
-
-                            override fun onFailure(call: Call<List<ResponseGetDevices>>?, t: Throwable?) {
-                                Log.d(TAG, "on onFailure:" + t.toString())
-                                updateResultArea(t.toString())
-                            }
-                        })
+//                        val request = retrofit.create(RequestGetDevices::class.java).request();
+//                        val service = GetDeviceService(getDeviceUpdateEvent())
+//                        request.enqueue(service.getService())
+                        val request = GetDeviceServiceOld(getDeviceUpdateEvent())
+                        request.getService().execute()
                     }
                     EventEnum.GET_APPLIANCES -> {
                         setGetApplicationsEvent(retrofit)
@@ -114,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                         showSignalArea(result)
                         updateResultArea(result.toString())
                     }
-                    else->
+                    else ->
                         Log.d(TAG, "on Response:" + responseGet.errorBody()!!.string())
                 }
             }
@@ -124,6 +111,14 @@ class MainActivity : AppCompatActivity() {
                 updateResultArea(t.toString())
             }
         })
+    }
+
+    fun getDeviceUpdateEvent(): DeviceUpdateEvent {
+        return object : DeviceUpdateEvent {
+            override fun updateResultArea(str: String) {
+                result_area.text = str
+            }
+        }
     }
 
     fun updateResultArea(resultText: String) {
