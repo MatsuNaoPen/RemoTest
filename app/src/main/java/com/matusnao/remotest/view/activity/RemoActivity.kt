@@ -1,8 +1,11 @@
 package com.matusnao.remotest.view.activity
 
 import android.app.Fragment
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import com.google.android.gms.maps.MapFragment
 import com.matusnao.household.connection.api.service.BaseService
@@ -28,6 +31,28 @@ class RemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remo)
         setUpMenuButton()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.base_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        item?.let {
+            when (it.itemId) {
+                R.id.show_certification_activity -> {
+                    startCertificationActivity()
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun startCertificationActivity() {
+        val intent = Intent(this, CertificationActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setUpMenuButton() {

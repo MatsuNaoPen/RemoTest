@@ -25,7 +25,6 @@ class CertificationActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
         init()
     }
 
