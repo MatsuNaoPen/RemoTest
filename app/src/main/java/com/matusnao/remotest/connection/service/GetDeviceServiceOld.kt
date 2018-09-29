@@ -3,7 +3,7 @@ package com.matusnao.remotest.connection.service
 import android.os.AsyncTask
 import com.google.gson.Gson
 import com.matusnao.remotest.connection.response.ResponseGetDevices
-import com.matusnao.remotest.view.VCInterface.RemoCallback
+import com.matusnao.remotest.view.vcInterface.RemoCallback
 import java.net.HttpURLConnection
 import java.net.URL
 import java.io.BufferedReader

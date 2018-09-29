@@ -2,7 +2,7 @@ package com.matusnao.remotest.connection.service
 
 import android.util.Log
 import com.matusnao.remotest.connection.response.ResponseGetUsersMe
-import com.matusnao.remotest.view.VCInterface.RemoCallback
+import com.matusnao.remotest.view.vcInterface.RemoCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,23 +15,47 @@ class GetUserEventService(val callback: RemoCallback) {
 
     fun getService(): Callback<ResponseGetUsersMe> {
         return object : Callback<ResponseGetUsersMe> {
-            override fun onResponse(call: Call<ResponseGetUsersMe>?, responseGet: Response<ResponseGetUsersMe>?) {
-                val message = when (responseGet!!.code()) {
-                    200 -> {
-                        responseGet.body()?.toString() ?: ""
-                    }
-                    else -> {
-                        responseGet.errorBody()?.string() ?: ""
-                    }
+            override fun onResponse(call: Call<ResponseGetUsersMe>?, response: Response<ResponseGetUsersMe>?) {
+                response?.let {
+                    callback.updateResultArea(getMessage(it))
+                    callback.updateLogArea(getLog(it))
                 }
-                Log.d(TAG, "on Response:" + message)
-                callback.updateResultArea(message)
             }
 
             override fun onFailure(call: Call<ResponseGetUsersMe>?, t: Throwable?) {
                 Log.d(TAG, "on onFailure:" + t.toString())
-                callback.updateResultArea(t.toString())
+                callback.updateLogArea(t.toString())
             }
         }
     }
+
+    private fun getMessage(response: Response<ResponseGetUsersMe>): String {
+        val builder = StringBuilder()
+        when (response.code()) {
+            200 -> {
+                response.body()?.let {
+                    builder.append("id : " + it.id + "\n")
+                    builder.append("nickname : " + it.nickname)
+                }
+            }
+        }
+
+        if (builder.isEmpty()) {
+            builder.append("error")
+        }
+        return builder.toString()
+    }
+
+    private fun getLog(response: Response<ResponseGetUsersMe>): String {
+        when (response.code()) {
+            200 -> {
+                response.body()?.let {
+                    return response.body().toString()
+                }
+            }
+        }
+
+        return response.errorBody()?.toString() ?: ""
+    }
+
 }

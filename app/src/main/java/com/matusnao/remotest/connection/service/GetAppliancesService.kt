@@ -4,7 +4,7 @@ import android.util.Log
 import com.matusnao.remotest.connection.response.ResponseGetAppliances
 import com.matusnao.remotest.data.SignalListData
 import com.matusnao.remotest.data.Signals
-import com.matusnao.remotest.view.VCInterface.RemoCallback
+import com.matusnao.remotest.view.vcInterface.RemoCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +25,7 @@ class GetAppliancesService(val callback: RemoCallback) {
                         val result: List<ResponseGetAppliances> = responseGet.body()!!
                         Log.d(TAG, result.toString())
                         callback.showSignalArea(getSignalList(result))
-                        callback.updateResultArea(result.toString())
+                        callback.updateLogArea(result.toString())
                     }
                     else ->
                         Log.d(TAG, "on Response:" + responseGet.errorBody()!!.string())
@@ -34,7 +34,7 @@ class GetAppliancesService(val callback: RemoCallback) {
 
             override fun onFailure(call: Call<List<ResponseGetAppliances>>?, t: Throwable?) {
                 Log.d(TAG, "on onFailure:" + t.toString())
-                callback.updateResultArea(t.toString())
+                callback.updateLogArea(t.toString())
             }
         }
     }

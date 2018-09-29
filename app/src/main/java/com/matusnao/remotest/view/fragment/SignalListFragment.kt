@@ -13,6 +13,7 @@ import com.matusnao.remotest.R
 import com.matusnao.remotest.connection.request.RequestPostSignalsXXXSend
 import com.matusnao.remotest.connection.response.ResponsePostSignalsXXXSend
 import com.matusnao.remotest.data.SignalListData
+import com.matusnao.remotest.preference.ConstValues
 import com.matusnao.remotest.view.activity.RemoActivity
 import kotlinx.android.synthetic.main.fragment_signal_list.*
 import kotlinx.android.synthetic.main.signal_item.view.*
@@ -34,7 +35,7 @@ class SignalListFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val signalListData = arguments.getSerializable("SIGNALLIST") as SignalListData
+        val signalListData = arguments.getSerializable(ConstValues.REMO_KEY_SIGNALLIST) as SignalListData
 
         for ((key, data) in signalListData.data) {
             val modelLayout = inflater.inflate(R.layout.signal_item, null) as LinearLayout
@@ -62,26 +63,26 @@ class SignalListFragment : Fragment() {
                 when (response!!.code()) {
                     400, 401, 404 -> {
                         Log.d(TAG, "on Response:" + response.errorBody()!!.string())
-                        setResultArea("Failure")
+                        setLogArea("Failure")
                     }
                     else -> {
                         Log.d(TAG, "on Response:" + response.toString())
-                        setResultArea("Success")
+                        setLogArea("Success")
                     }
                 }
             }
 
             override fun onFailure(call: Call<ResponsePostSignalsXXXSend>?, t: Throwable?) {
                 Log.d(TAG, "on onFailure:" + t.toString())
-                setResultArea("Failure")
+                setLogArea("Failure")
             }
         })
     }
 
-    private fun setResultArea(result: String) {
+    private fun setLogArea(result: String) {
         try {
             val mainActivity = activity as RemoActivity
-            mainActivity.updateResultArea(result)
+            mainActivity.updateLogArea(result)
         } catch (e: Exception) {
 
         }

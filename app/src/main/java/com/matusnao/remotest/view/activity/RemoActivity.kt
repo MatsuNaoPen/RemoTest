@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import com.google.android.gms.maps.MapFragment
 import com.matusnao.household.connection.api.service.BaseService
 import com.matusnao.remotest.R
 import com.matusnao.remotest.connection.request.RequestGetAppliances
@@ -21,8 +20,9 @@ import com.matusnao.remotest.data.SignalListData
 import com.matusnao.remotest.enums.EventEnum
 import com.matusnao.remotest.preference.ConstValues
 import com.matusnao.remotest.preference.PreferenceUtils
-import com.matusnao.remotest.view.VCInterface.RemoCallback
+import com.matusnao.remotest.view.vcInterface.RemoCallback
 import com.matusnao.remotest.view.fragment.SignalListFragment
+import com.matusnao.remotest.view.fragment.SimpleFragment
 import kotlinx.android.synthetic.main.activity_remo.*
 
 /**
@@ -38,7 +38,7 @@ class RemoActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.base_menu, menu)
-        menu?.let{initLogState(menu.findItem(R.id.swich_debug_area))}
+        menu?.let { initLogState(menu.findItem(R.id.swich_debug_area)) }
         return true
     }
 
@@ -67,11 +67,11 @@ class RemoActivity : AppCompatActivity() {
 
     private fun setLogState(showLogFlag: Boolean, item: MenuItem) {
         if (!showLogFlag) {
-            result_area.visibility = View.GONE
+            log_area.visibility = View.GONE
             PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, false)
             item.title = getString(R.string.menu_switch_log_off)
         } else {
-            result_area.visibility = View.VISIBLE
+            log_area.visibility = View.VISIBLE
             PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, true)
             item.title = getString(R.string.menu_switch_log_on)
         }
@@ -88,6 +88,7 @@ class RemoActivity : AppCompatActivity() {
             buttonView.text = event.text
             buttonView.setOnClickListener {
                 val retrofit = BaseService.getRetrofit(this)
+                startProgress()
 
                 when (event) {
                     EventEnum.GET_USER_EVENT -> {
@@ -116,39 +117,57 @@ class RemoActivity : AppCompatActivity() {
 
     private fun getCallback(): RemoCallback {
         return object : RemoCallback {
+            override fun updateResultArea(result: String) {
+                showResultArea(result)
+            }
+
             override fun showSignalArea(data: SignalListData) {
-                signal_setting_list.setOnClickListener {
-                    showSignalSetting(true, data)
-                }
-
-                signal_setting_setting.setOnClickListener {
-                    showSignalSetting(false, data)
-                }
+                showSignalSetting(data)
             }
 
-            override fun updateResultArea(str: String) {
-                this@RemoActivity.updateResultArea(str)
+
+            override fun updateLogArea(logStr: String) {
+                this@RemoActivity.updateLogArea(logStr)
             }
         }
     }
 
-    fun updateResultArea(resultText: String) {
-        result_area.text = resultText
+    fun updateLogArea(resultText: String) {
+        log_area.text = resultText
     }
 
-    fun showSignalSetting(isList: Boolean, data: SignalListData) {
-        val fragment: Fragment = if (isList) {
-            SignalListFragment()
-        } else {
-            MapFragment.newInstance()
-        }
+    private fun showResultArea(result: String) {
+        val fragment = SimpleFragment()
+        val bundle = Bundle()
+        bundle.putString(ConstValues.REMO_KEY_SIMPLE_RESULT, result)
+        fragment.arguments = bundle
 
+        updateFragment(fragment)
+
+        disableProgress()
+    }
+
+    fun showSignalSetting(data: SignalListData) {
+        val fragment = SignalListFragment()
         val bundle = Bundle()
         bundle.putSerializable(ConstValues.REMO_KEY_SIGNALLIST, data)
         fragment.arguments = bundle
 
+        updateFragment(fragment)
+    }
+
+    private fun updateFragment(fragment: Fragment) {
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_signal_area, fragment)
         transaction.commit()
     }
+
+    private fun startProgress() {
+        remo_progress.visibility = View.VISIBLE
+    }
+
+    private fun disableProgress(){
+        remo_progress.visibility = View.GONE
+    }
+
 }
