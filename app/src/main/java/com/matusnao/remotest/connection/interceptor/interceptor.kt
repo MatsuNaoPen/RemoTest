@@ -10,8 +10,8 @@ class RemoInterceptor() : Interceptor {
     val auth_token = "write yourt token"
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        var orig = chain.request()
-        var request = orig.newBuilder()
+        val orig = chain.request()
+        val request = orig.newBuilder()
                 .header("Authorization", "Bearer " + auth_token)
                 .build()
 

@@ -2,11 +2,8 @@ package com.matusnao.remotest.connection.service
 
 import android.os.AsyncTask
 import com.google.gson.Gson
-import com.matusnao.remotest.connection.request.RequestGetDevices
 import com.matusnao.remotest.connection.response.ResponseGetDevices
-import com.matusnao.remotest.view.VCInterface.DeviceUpdateEvent
-import okhttp3.Response
-import retrofit2.converter.gson.GsonConverterFactory
+import com.matusnao.remotest.view.VCInterface.MainCallback
 import java.net.HttpURLConnection
 import java.net.URL
 import java.io.BufferedReader
@@ -15,7 +12,7 @@ import java.io.InputStreamReader
 /**
  * Created by DevUser on 2018/06/10.
  */
-class GetDeviceServiceOld(val event: DeviceUpdateEvent) {
+class GetDeviceServiceOld(val event: MainCallback) {
     val auth_token = "へんこうする"
 
     fun getService(): AsyncTask<Void, Void, ResponseGetDevices> {
