@@ -6,13 +6,12 @@ import okhttp3.Response
 /**
  * Created by DevUser on 2018/05/04.
  */
-class RemoInterceptor() : Interceptor {
-    val auth_token = "write yourt token"
+class RemoInterceptor(private val token: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val orig = chain.request()
         val request = orig.newBuilder()
-                .header("Authorization", "Bearer " + auth_token)
+                .header("Authorization", "Bearer " + token)
                 .build()
 
         return chain.proceed(request)

@@ -5,4 +5,9 @@
 
     <!-- ボタン -->
     <string name="get_user">getUset</string>
+
+    <string name="certification_hint_please_input_token">ここにトークンを入力してください</string>
+    <string name="certification_start_button_text">認証画面へ</string>
+    <string name="certification_save_token_text">トークンを保存する</string>
+    <string name="certification_empty_message">トークンを入力してください</string>
 </resources>

@@ -13,7 +13,7 @@ import com.matusnao.remotest.R
 import com.matusnao.remotest.connection.request.RequestPostSignalsXXXSend
 import com.matusnao.remotest.connection.response.ResponsePostSignalsXXXSend
 import com.matusnao.remotest.data.SignalListData
-import com.matusnao.remotest.view.activity.MainActivity
+import com.matusnao.remotest.view.activity.RemoActivity
 import kotlinx.android.synthetic.main.fragment_signal_list.*
 import kotlinx.android.synthetic.main.signal_item.view.*
 import retrofit2.Call
@@ -55,7 +55,7 @@ class SignalListFragment : Fragment() {
     }
 
     private fun getSignalOnClickEvent(signalId: String) {
-        val retrofit = BaseService.getRetrofit()
+        val retrofit = BaseService.getRetrofit(context)
         val request = retrofit.create(RequestPostSignalsXXXSend::class.java).request(signalId)
         request.enqueue(object : Callback<ResponsePostSignalsXXXSend> {
             override fun onResponse(call: Call<ResponsePostSignalsXXXSend>?, response: Response<ResponsePostSignalsXXXSend>?) {
@@ -80,7 +80,7 @@ class SignalListFragment : Fragment() {
 
     private fun setResultArea(result: String) {
         try {
-            val mainActivity = activity as MainActivity
+            val mainActivity = activity as RemoActivity
             mainActivity.updateResultArea(result)
         } catch (e: Exception) {
 

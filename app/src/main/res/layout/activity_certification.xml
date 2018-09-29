@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/input_remo_token"
+        android:layout_width="309dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:hint="@string/certification_hint_please_input_token"
+        android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/certification_start_button"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/certification_start_button_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_remo_token" />
+
+    <Button
+        android:id="@+id/certification_save_button"
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/certification_save_token_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/certification_start_button" />
+
+    <TextView
+        android:id="@+id/certification_token_error"
+        android:layout_width="308dp"
+        android:layout_height="76dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:text="@string/certification_empty_message"
+        android:textColor="@color/lightBlue"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/certification_save_button" />
+
+    <TextView
+        android:id="@+id/test_token"
+        android:layout_width="314dp"
+        android:layout_height="21dp"
+        android:text="テスト用登録済みトークン"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/certification_token_error" />
+
+    <EditText
+        android:id="@+id/textView3"
+        android:layout_width="308dp"
+        android:layout_height="64dp"
+        android:text="e4_lshf5aV289y68FEQ3zVp7tv6LU883BrmfDcJ3gKM.B2bqe0FgEXHhskGfGb7GOoyejzOQcfwXRdHscK-_j94"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/test_token" />
+</android.support.constraint.ConstraintLayout>
