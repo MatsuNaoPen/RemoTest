@@ -3,4 +3,7 @@
     <item
         android:id="@+id/show_certification_activity"
         android:title="@string/menu_reset_token" />
+    <item
+        android:id="@+id/swich_debug_area"
+        android:title = "@string/menu_switch_log_on" />
 </menu>

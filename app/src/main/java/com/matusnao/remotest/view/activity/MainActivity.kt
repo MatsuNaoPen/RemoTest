@@ -1,14 +1,10 @@
 package com.matusnao.remotest.view.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.matusnao.remotest.R
 import com.matusnao.remotest.preference.ConstValues
 import com.matusnao.remotest.preference.PreferenceUtils
-import android.widget.FrameLayout
-
 
 /**
  * Created by DevUser on 2018/09/29.

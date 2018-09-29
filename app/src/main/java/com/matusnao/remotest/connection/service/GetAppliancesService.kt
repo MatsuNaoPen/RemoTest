@@ -4,7 +4,7 @@ import android.util.Log
 import com.matusnao.remotest.connection.response.ResponseGetAppliances
 import com.matusnao.remotest.data.SignalListData
 import com.matusnao.remotest.data.Signals
-import com.matusnao.remotest.view.VCInterface.MainCallback
+import com.matusnao.remotest.view.VCInterface.RemoCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +12,7 @@ import retrofit2.Response
 /**
  * Created by DevUser on 2018/09/29.
  */
-class GetAppliancesService(val callback: MainCallback) {
+class GetAppliancesService(val callback: RemoCallback) {
     private val TAG = this.javaClass.name
 
     fun getService(): Callback<List<ResponseGetAppliances>> {

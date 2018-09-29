@@ -3,7 +3,7 @@ package com.matusnao.remotest.connection.service
 import android.os.AsyncTask
 import com.google.gson.Gson
 import com.matusnao.remotest.connection.response.ResponseGetDevices
-import com.matusnao.remotest.view.VCInterface.MainCallback
+import com.matusnao.remotest.view.VCInterface.RemoCallback
 import java.net.HttpURLConnection
 import java.net.URL
 import java.io.BufferedReader
@@ -12,7 +12,7 @@ import java.io.InputStreamReader
 /**
  * Created by DevUser on 2018/06/10.
  */
-class GetDeviceServiceOld(val event: MainCallback) {
+class GetDeviceServiceOld(val event: RemoCallback) {
     val auth_token = "へんこうする"
 
     fun getService(): AsyncTask<Void, Void, ResponseGetDevices> {

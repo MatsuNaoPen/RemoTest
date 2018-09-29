@@ -1,7 +1,7 @@
 package com.matusnao.household.connection.api.service
 
 import android.content.Context
-import com.matusnao.remotest.connection.interceptor.RemoInterceptor
+import com.matusnao.remotest.connection.RemoInterceptor
 import com.matusnao.remotest.preference.ConstValues
 import com.matusnao.remotest.preference.PreferenceUtils
 import okhttp3.OkHttpClient

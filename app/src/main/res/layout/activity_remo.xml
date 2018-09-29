@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <HorizontalScrollView
+        android:id="@+id/event_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -12,13 +13,14 @@
             android:id="@+id/menu_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:minHeight="30dp"/>
+            android:minHeight="30dp"
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/event_area"
         android:orientation="vertical">
 
         <LinearLayout
@@ -61,20 +63,10 @@
                 android:orientation="vertical" />
         </LinearLayout>
 
-        <ScrollView
-            android:layout_below="@id/signal_setting_layout"
+        <TextView
+            android:id="@+id/result_area"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:background="@color/resultArea"
-            android:layout_gravity="bottom">
-
-            <TextView
-                android:id="@+id/result_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:text="信号実行結果" />
-        </ScrollView>
+            android:layout_height="250dp"
+            android:focusableInTouchMode="false" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.matusnao.remotest.connection.interceptor
+package com.matusnao.remotest.connection
 
 import okhttp3.Interceptor
 import okhttp3.Response

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import com.google.android.gms.maps.MapFragment
 import com.matusnao.household.connection.api.service.BaseService
@@ -18,7 +19,9 @@ import com.matusnao.remotest.connection.service.GetDeviceService
 import com.matusnao.remotest.connection.service.GetUserEventService
 import com.matusnao.remotest.data.SignalListData
 import com.matusnao.remotest.enums.EventEnum
-import com.matusnao.remotest.view.VCInterface.MainCallback
+import com.matusnao.remotest.preference.ConstValues
+import com.matusnao.remotest.preference.PreferenceUtils
+import com.matusnao.remotest.view.VCInterface.RemoCallback
 import com.matusnao.remotest.view.fragment.SignalListFragment
 import kotlinx.android.synthetic.main.activity_remo.*
 
@@ -35,19 +38,43 @@ class RemoActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.base_menu, menu)
+        menu?.let{initLogState(menu.findItem(R.id.swich_debug_area))}
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         item?.let {
             when (it.itemId) {
-                R.id.show_certification_activity -> {
+                R.id.show_certification_activity ->
                     startCertificationActivity()
-                }
+                R.id.swich_debug_area ->
+                    switchLogState(item)
             }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun initLogState(item: MenuItem) {
+        val showLogFlag = PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG)
+        setLogState(showLogFlag, item)
+    }
+
+    private fun switchLogState(item: MenuItem) {
+        val showLogFlag = PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG)
+        setLogState(!showLogFlag, item)
+    }
+
+    private fun setLogState(showLogFlag: Boolean, item: MenuItem) {
+        if (!showLogFlag) {
+            result_area.visibility = View.GONE
+            PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, false)
+            item.title = getString(R.string.menu_switch_log_off)
+        } else {
+            result_area.visibility = View.VISIBLE
+            PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, true)
+            item.title = getString(R.string.menu_switch_log_on)
+        }
     }
 
     private fun startCertificationActivity() {
@@ -87,8 +114,8 @@ class RemoActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCallback(): MainCallback {
-        return object : MainCallback {
+    private fun getCallback(): RemoCallback {
+        return object : RemoCallback {
             override fun showSignalArea(data: SignalListData) {
                 signal_setting_list.setOnClickListener {
                     showSignalSetting(true, data)
@@ -117,7 +144,7 @@ class RemoActivity : AppCompatActivity() {
         }
 
         val bundle = Bundle()
-        bundle.putSerializable("SIGNALLIST", data)
+        bundle.putSerializable(ConstValues.REMO_KEY_SIGNALLIST, data)
         fragment.arguments = bundle
 
         val transaction = fragmentManager.beginTransaction()

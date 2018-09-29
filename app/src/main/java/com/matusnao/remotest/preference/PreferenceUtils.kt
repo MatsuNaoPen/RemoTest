@@ -20,6 +20,16 @@ object PreferenceUtils {
         editor.apply()
     }
 
+    fun getBoolean(context: Context, key: String) =
+            getSharedPreference(context).getBoolean(key, false)
+
+    fun putBoolean(context: Context, key: String, value: Boolean) {
+        val preference = getSharedPreference(context)
+        val editor = preference.edit()
+        editor.putBoolean(key, value)
+        editor.apply()
+    }
+
     fun isExist(context: Context, key: String): Boolean =
             getSharedPreference(context).getString(key, ConstValues.DEFAULT_VALUE_PREF_NO_DATA_STRING) != ConstValues.DEFAULT_VALUE_PREF_NO_DATA_STRING
 

@@ -2,7 +2,7 @@ package com.matusnao.remotest.connection.service
 
 import android.util.Log
 import com.matusnao.remotest.connection.response.ResponseGetUsersMe
-import com.matusnao.remotest.view.VCInterface.MainCallback
+import com.matusnao.remotest.view.VCInterface.RemoCallback
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,7 +10,7 @@ import retrofit2.Response
 /**
  * Created by DevUser on 2018/09/29.
  */
-class GetUserEventService(val callback: MainCallback) {
+class GetUserEventService(val callback: RemoCallback) {
     private val TAG = javaClass.name
 
     fun getService(): Callback<ResponseGetUsersMe> {

@@ -52,5 +52,4 @@ class CertificationActivity : AppCompatActivity() {
         return Intent(Intent.ACTION_VIEW, uri)
     }
 
-    private fun isRemoTokenExisit(): Boolean = PreferenceUtils.isExist(this, ConstValues.PREF_KEY_REMO_TOKEN)
 }
