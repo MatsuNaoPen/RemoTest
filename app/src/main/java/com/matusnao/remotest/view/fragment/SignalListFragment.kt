@@ -42,6 +42,20 @@ class SignalListFragment : Fragment() {
             val modelSignalLayout = modelLayout.findViewById<LinearLayout>(R.id.signal_item_signal_layout)
             modelLayout.signal_item_model_text.text = key
 
+            modelSignalLayout.visibility = View.GONE
+            modelLayout.setOnClickListener {
+                modelSignalLayout.let {
+                    when (it.visibility) {
+                        View.VISIBLE -> {
+                            it.visibility = View.GONE
+                        }
+                        View.GONE -> {
+                            it.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+
             for (tmpData in data) {
                 val signalView = inflater.inflate(R.layout.signal_list_item, null)
                 val signalName = signalView.findViewById<TextView>(R.id.signal_item_text)

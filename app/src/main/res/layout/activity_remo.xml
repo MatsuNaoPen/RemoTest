@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/remo_progress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
     <HorizontalScrollView
         android:id="@+id/event_area"
         android:layout_width="match_parent"
@@ -54,4 +48,10 @@
             android:layout_height="250dp"
             android:focusableInTouchMode="false" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/remo_progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </RelativeLayout>
