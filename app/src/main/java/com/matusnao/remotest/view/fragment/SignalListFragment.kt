@@ -1,6 +1,6 @@
 package com.matusnao.remotest.view.fragment
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,9 +33,9 @@ class SignalListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_signal_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val signalListData = arguments.getSerializable(ConstValues.REMO_KEY_SIGNALLIST) as SignalListData
+        val signalListData = arguments?.getSerializable(ConstValues.REMO_KEY_SIGNALLIST) as SignalListData
 
         for ((key, data) in signalListData.data) {
             val modelLayout = inflater.inflate(R.layout.signal_item, null) as LinearLayout
@@ -70,35 +70,37 @@ class SignalListFragment : Fragment() {
     }
 
     private fun getSignalOnClickEvent(signalId: String) {
-        val retrofit = BaseService.getRetrofit(context)
-        val request = retrofit.create(RequestPostSignalsXXXSend::class.java).request(signalId)
-        request.enqueue(object : Callback<ResponsePostSignalsXXXSend> {
-            override fun onResponse(call: Call<ResponsePostSignalsXXXSend>?, response: Response<ResponsePostSignalsXXXSend>?) {
-                when (response?.code()) {
-                    400, 401, 404 -> {
-                        response.errorBody()?.let {
-                            Log.d(TAG, "on Response:" + it.string())
-                            setLogArea("Failure")
+        context?.let {
+            val retrofit = BaseService.getRetrofit(it)
+            val request = retrofit.create(RequestPostSignalsXXXSend::class.java).request(signalId)
+            request.enqueue(object : Callback<ResponsePostSignalsXXXSend> {
+                override fun onResponse(call: Call<ResponsePostSignalsXXXSend>?, response: Response<ResponsePostSignalsXXXSend>?) {
+                    when (response?.code()) {
+                        400, 401, 404 -> {
+                            response.errorBody()?.let {
+                                Log.d(TAG, "on Response:" + it.string())
+                                setLogArea("Failure")
+                            }
+                        }
+                        else -> {
+                            Log.d(TAG, "on Response:" + response.toString())
+                            setLogArea("Success")
                         }
                     }
-                    else -> {
-                        Log.d(TAG, "on Response:" + response.toString())
-                        setLogArea("Success")
-                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ResponsePostSignalsXXXSend>?, t: Throwable?) {
-                Log.d(TAG, "on onFailure:" + t.toString())
-                setLogArea("Failure")
-            }
-        })
+                override fun onFailure(call: Call<ResponsePostSignalsXXXSend>?, t: Throwable?) {
+                    Log.d(TAG, "on onFailure:" + t.toString())
+                    setLogArea("Failure")
+                }
+            })
+        }
     }
 
     private fun setLogArea(result: String) {
         try {
-            val mainActivity = activity as RemoActivity
-            mainActivity.updateLogArea(result)
+            val mainActivity = activity as RemoActivity?
+            mainActivity?.updateLogArea(result)
         } catch (e: Exception) {
 
         }

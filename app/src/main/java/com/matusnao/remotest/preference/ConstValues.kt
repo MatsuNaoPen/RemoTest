@@ -5,7 +5,8 @@ package com.matusnao.remotest.preference
  */
 object ConstValues{
     val PREF_KEY_REMO_TOKEN :String = "PrefKeyRemoToken"
-    val PREF_KEY_REMO_LOG_FLAG:String = "PrefKeyRemoLogState"
+    val PREF_KEY_REMO_LOG_FLAG:String = "PrefKeyRemoLogFlag"
+    val PREF_KEY_REMO_API_DEBUG_FLAG:String = "PrefKeyRemoApiDebugFlag"
 
     val DEFAULT_VALUE_PREF_NO_DATA_STRING = ""
 

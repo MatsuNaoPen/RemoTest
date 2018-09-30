@@ -5,5 +5,8 @@
         android:title="@string/menu_reset_token" />
     <item
         android:id="@+id/swich_debug_area"
-        android:title = "@string/menu_switch_log_on" />
+        android:title="" />
+    <item
+        android:id="@+id/menu_api_mock"
+        android:title="" />
 </menu>

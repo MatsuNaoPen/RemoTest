@@ -16,4 +16,6 @@
     <string name="menu_reset_token">reset token</string>
     <string name="menu_switch_log_on">Log:ON</string>
     <string name="menu_switch_log_off">Log:OFF</string>
+    <string name="menu_api_mock_on">ApiMock:ON</string>
+    <string name="menu_api_mock_off">ApiMock:OFF</string>
 </resources>

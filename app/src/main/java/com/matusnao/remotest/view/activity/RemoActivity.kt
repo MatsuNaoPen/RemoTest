@@ -1,6 +1,6 @@
 package com.matusnao.remotest.view.activity
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -37,7 +37,7 @@ class RemoActivity : BaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.base_menu, menu)
-        menu?.let { initLogState(menu.findItem(R.id.swich_debug_area)) }
+        menu?.let { initMenu(menu) }
         return true
     }
 
@@ -48,33 +48,84 @@ class RemoActivity : BaseActivity() {
                     startCertificationActivity()
                 R.id.swich_debug_area ->
                     switchLogState(item)
+                R.id.menu_api_mock ->
+                    switchApiState(item)
             }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initLogState(item: MenuItem) {
-        val showLogFlag = PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG)
-        setLogState(showLogFlag, item)
+    private fun initMenu(menu: Menu) {
+        setLogVisibility(PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG),
+                menu.findItem(R.id.swich_debug_area))
+        setApiMock(PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_API_DEBUG_FLAG)
+                , menu.findItem(R.id.menu_api_mock))
+    }
+
+    private fun switchApiState(item: MenuItem) {
+        val key = getKey(item)
+        key?.let {
+            val showLogFlag = PreferenceUtils.getBoolean(this, it)
+            // TODO Mock差し替え
+            updatePrefAndDisp(showLogFlag, item)
+        }
     }
 
     private fun switchLogState(item: MenuItem) {
-        val showLogFlag = PreferenceUtils.getBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG)
-        setLogState(!showLogFlag, item)
-    }
-
-    private fun setLogState(showLogFlag: Boolean, item: MenuItem) {
-        if (!showLogFlag) {
-            log_area.visibility = View.GONE
-            PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, false)
-            item.title = getString(R.string.menu_switch_log_off)
-        } else {
-            log_area.visibility = View.VISIBLE
-            PreferenceUtils.putBoolean(this, ConstValues.PREF_KEY_REMO_LOG_FLAG, true)
-            item.title = getString(R.string.menu_switch_log_on)
+        val key = getKey(item)
+        key?.let {
+            val showLogFlag = PreferenceUtils.getBoolean(this, it)
+            setLogVisibility(!showLogFlag, item)
         }
     }
+
+    private fun setLogVisibility(showLogFlag: Boolean, item: MenuItem) {
+        if (!showLogFlag) {
+            log_area.visibility = View.GONE
+        } else {
+            log_area.visibility = View.VISIBLE
+        }
+
+        updatePrefAndDisp(showLogFlag, item)
+    }
+
+    private fun setApiMock(showLogFlag: Boolean, item: MenuItem) {
+        // TODO Mock差し替え
+        updatePrefAndDisp(showLogFlag, item)
+    }
+
+    private fun updatePrefAndDisp(showLogFlag: Boolean, item: MenuItem) {
+        val key = getKey(item)
+        key?.let {
+            PreferenceUtils.putBoolean(this, key, showLogFlag)
+        }
+        item.title = getMenuTitle(item, showLogFlag)
+    }
+
+    private fun getKey(item: MenuItem): String? = when (item.itemId) {
+        R.id.swich_debug_area ->
+            ConstValues.PREF_KEY_REMO_LOG_FLAG
+        R.id.menu_api_mock ->
+            ConstValues.PREF_KEY_REMO_API_DEBUG_FLAG
+        else ->
+            null
+    }
+
+    private fun getMenuTitle(item: MenuItem, flag: Boolean): String =
+            when (item.itemId) {
+                R.id.swich_debug_area ->
+                    if (flag)
+                        getString(R.string.menu_switch_log_off)
+                    else
+                        getString(R.string.menu_switch_log_on)
+                R.id.menu_api_mock ->
+                    if (flag)
+                        getString(R.string.menu_api_mock_off)
+                    else
+                        getString(R.string.menu_api_mock_on)
+                else -> ""
+            }
 
     private fun startCertificationActivity() {
         val intent = Intent(this, CertificationActivity::class.java)
@@ -124,7 +175,6 @@ class RemoActivity : BaseActivity() {
                 showSignalSetting(data)
             }
 
-
             override fun updateLogArea(logStr: String) {
                 this@RemoActivity.updateLogArea(logStr)
             }
@@ -154,10 +204,9 @@ class RemoActivity : BaseActivity() {
     }
 
     private fun updateFragment(fragment: Fragment) {
-        val transaction = fragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_signal_area, fragment)
         transaction.commit()
-
         disableProgress()
     }
 }
