@@ -8,11 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="SignalList">
+    <style name="FunctionList">
         <item name="android:background">@drawable/simple_stroke</item>
         <item name="android:padding">10dp</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="DeviceList">
+        <item name="android:background">@drawable/device_list</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
+    <style name="SignalList">
+        <item name="android:background">@drawable/signal_list</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

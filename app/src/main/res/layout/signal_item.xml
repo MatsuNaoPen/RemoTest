@@ -6,11 +6,10 @@
 
     <TextView
         android:id="@+id/signal_item_model_text"
-        style="@style/SignalList"
-        android:background="@color/modelArea"
+        style="@style/DeviceList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="機器名"/>
+        android:text="機器名" />
 
     <LinearLayout
         android:id="@+id/signal_item_signal_layout"

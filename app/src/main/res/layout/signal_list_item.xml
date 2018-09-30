@@ -8,7 +8,6 @@
     <TextView
         android:id="@+id/signal_item_text"
         style="@style/SignalList"
-        android:background="@color/signalArea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="機器名" />
