@@ -3,7 +3,6 @@ package com.matusnao.remotest.view.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.matusnao.remotest.R
 import com.matusnao.remotest.preference.ConstValues
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_certification.*
  *
  * Created by DevUser on 2018/09/29.
  */
-class CertificationActivity : AppCompatActivity() {
+class CertificationActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_certification)

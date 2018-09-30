@@ -60,10 +60,12 @@ class SignalListFragment : Fragment() {
         val request = retrofit.create(RequestPostSignalsXXXSend::class.java).request(signalId)
         request.enqueue(object : Callback<ResponsePostSignalsXXXSend> {
             override fun onResponse(call: Call<ResponsePostSignalsXXXSend>?, response: Response<ResponsePostSignalsXXXSend>?) {
-                when (response!!.code()) {
+                when (response?.code()) {
                     400, 401, 404 -> {
-                        Log.d(TAG, "on Response:" + response.errorBody()!!.string())
-                        setLogArea("Failure")
+                        response.errorBody()?.let {
+                            Log.d(TAG, "on Response:" + it.string())
+                            setLogArea("Failure")
+                        }
                     }
                     else -> {
                         Log.d(TAG, "on Response:" + response.toString())

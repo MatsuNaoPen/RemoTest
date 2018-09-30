@@ -19,16 +19,21 @@ class GetAppliancesService(val callback: RemoCallback) {
         return object : Callback<List<ResponseGetAppliances>> {
             override fun onResponse(call: Call<List<ResponseGetAppliances>>?,
                                     responseGet: Response<List<ResponseGetAppliances>>?) {
-                when (responseGet!!.code()) {
+                when (responseGet?.code()) {
                     200 -> {
                         Log.d(TAG, "on Response:" + responseGet.toString())
-                        val result: List<ResponseGetAppliances> = responseGet.body()!!
-                        Log.d(TAG, result.toString())
-                        callback.showSignalArea(getSignalList(result))
-                        callback.updateLogArea(result.toString())
+                        responseGet.body()?.let {
+                            Log.d(TAG, it.toString())
+                            callback.showSignalArea(getSignalList(it))
+                            callback.updateLogArea(it.toString())
+                        }
                     }
                     else ->
-                        Log.d(TAG, "on Response:" + responseGet.errorBody()!!.string())
+                        responseGet?.let {
+                            it.errorBody()?.let {
+                                Log.d(TAG, "on Response:" + it.string())
+                            }
+                        }
                 }
             }
 

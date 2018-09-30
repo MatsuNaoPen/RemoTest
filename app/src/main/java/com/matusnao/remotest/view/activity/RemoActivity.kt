@@ -3,7 +3,6 @@ package com.matusnao.remotest.view.activity
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_remo.*
  * Created by DevUser on 2018/05/04.
  */
 
-class RemoActivity : AppCompatActivity() {
+class RemoActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_remo)
@@ -143,8 +142,6 @@ class RemoActivity : AppCompatActivity() {
         fragment.arguments = bundle
 
         updateFragment(fragment)
-
-        disableProgress()
     }
 
     fun showSignalSetting(data: SignalListData) {
@@ -160,14 +157,7 @@ class RemoActivity : AppCompatActivity() {
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_signal_area, fragment)
         transaction.commit()
-    }
 
-    private fun startProgress() {
-        remo_progress.visibility = View.VISIBLE
+        disableProgress()
     }
-
-    private fun disableProgress(){
-        remo_progress.visibility = View.GONE
-    }
-
 }

@@ -30,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.BaseActivity" />
         <activity android:name=".view.activity.CertificationActivity" />
         <activity android:name=".view.activity.RemoActivity" />
 
